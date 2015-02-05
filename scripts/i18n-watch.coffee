@@ -94,6 +94,7 @@ class I18nWatcher
           @processProject info, ( err, info ) =>
             if err
               @sendGroupChatMesssage info.room, "Error checking for i18n on #{info.branch} see log"
+              @robot.logger.error "Error checking for i18n on #{info.branch} ", err
               console.log err
             else
               return if info.untranslatedKeys.length == 0
@@ -207,7 +208,7 @@ class I18nWatcher
       if err
         delete @workdirlocks[info.workdir]
         callback err, info
-      else
+      elsec
         # store info
         @persist ( storage ) =>
           for storageinfo in storage.projects
