@@ -208,7 +208,7 @@ class I18nWatcher
       if err
         delete @workdirlocks[info.workdir]
         callback err, info
-      elsec
+      else
         # store info
         @persist ( storage ) =>
           for storageinfo in storage.projects
