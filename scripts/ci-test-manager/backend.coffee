@@ -47,7 +47,7 @@ class CITestManagerBackendSingleton
       @interval = process.env.INTERVAL or 1
     start: () ->
       # Setup watchdog
-      setInterval( @.loop, @timer * 60 * 1000 )
+      setInterval( @.loop, @interval * 60 * 1000 )
 
     # private
     persist: ( callback ) ->
