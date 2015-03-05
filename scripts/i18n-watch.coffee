@@ -161,7 +161,7 @@ class I18nWatcher
     async.waterfall [
       # Cleanup
       @gitStep( absworkdir, "reset --hard" ) ,
-      @gitStep( absworkdir, "clean -f" ) ,
+      @gitStep( absworkdir, "clean -fd" ) ,
 
       # Prune /remove useless references
       @gitStep( absworkdir, "remote prune origin" ) ,
