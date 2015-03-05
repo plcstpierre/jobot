@@ -44,10 +44,10 @@ class CITestManagerBackendSingleton
     constructor: ( robot, hudson ) ->
       @robot = robot
       @hudson = hudson
-
+      @interval = process.env.INTERVAL or 1
     start: () ->
       # Setup watchdog
-      setInterval( @.loop, 1 * 60 * 1000 )
+      setInterval( @.loop, @timer * 60 * 1000 )
 
     # private
     persist: ( callback ) ->
