@@ -190,8 +190,8 @@ class I18nWatcher
         command = "export JAVA_HOME=#{info.jvm} && export MAVEN_OPTS=#{maven_opts} && mvn -f #{absworkdir}/pom.xml -pl ftk-i18n-extract -am -P i18n-xliff-extract clean compile process-resources"
         console.log command
         exec command,
-          timeout: 10 * 60 * 1000 # 10 minutes
-          maxBuffer: 1 * 1024 * 1024 # 1 MB
+          timeout: 20 * 60 * 1000 # 20 minutes
+          maxBuffer: 15 * 1024 * 1024 # 15 MB
         , ( error, stdout, stderr ) ->
           # TODO Handle failure because of compile fail or other. Check error.code
           if error
