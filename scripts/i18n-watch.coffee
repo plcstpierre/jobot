@@ -127,7 +127,7 @@ class I18nWatcher
 #############################
 
   gitCommand: ( absworkdir, action ) ->
-    command = "git "
+    command = "GIT_TRACE=2 git "
     command += "--work-tree=#{absworkdir} --git-dir=#{absworkdir}/.git " if absworkdir
     command += action
     return command
