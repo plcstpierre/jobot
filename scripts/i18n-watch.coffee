@@ -93,7 +93,7 @@ class I18nWatcher
           console.log "  for #{info.giturl} branch #{info.branch} in directory #{info.workdir}"
           @processProject info, ( err, info ) =>
             if err
-              @sendGroupChatMesssage info.room, "Error checking for i18n on #{info.branch} see log"
+              @sendGroupChatMesssage info.room, "Error checking for i18n on #{info.branch} see log #{info.command}"
               @robot.logger.error "Error checking for i18n on #{info.branch} ", err
               console.log err
             else
@@ -140,7 +140,11 @@ class I18nWatcher
       exec command, ( error, stdout, stderr ) ->
         console.log stdout unless error
         console.log "Error #{error} : stderr: #{stderr}" if error
-        callback error, stdout
+        if error
+          info.command = command
+          callback error, command
+        else
+          callback error, stdout
 
   #
   #  info =
@@ -167,7 +171,7 @@ class I18nWatcher
       @gitStep( absworkdir, "remote prune origin" ) ,
 
       # Pull latest changes
-      @gitStep( absworkdir, "pull -p" ) ,
+      @gitStep( absworkdir, "pull" ) ,
 
       # Check for new commites
       @gitStep( absworkdir, "log --pretty=format:\"{\\\"hash\\\":\\\"%H\\\", \\\"author\\\":\\\"%an\\\", \\\"date\\\":\\\"%ar\\\"},\" #{info.lastknowncommit}.." ),
@@ -195,6 +199,7 @@ class I18nWatcher
         , ( error, stdout, stderr ) ->
           # TODO Handle failure because of compile fail or other. Check error.code
           if error
+            info.command =command
             error = error + stderr + stdout
           #else
           #  console.log stdout
